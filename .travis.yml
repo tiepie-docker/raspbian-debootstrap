@@ -1,0 +1,17 @@
+sudo: required
+services: docker
+language: bash
+env:
+    global:
+        - QEMU_VER=v2.8.4
+        - DOCKER_REPO=tiepie/raspbian-debootstrap
+    matrix:
+        - ARCH=armhf INCLUDE=wget QEMU_ARCH=armhf SUITE=stretch UNAME_ARCH=armv6l VERSION=stretch
+
+before_script:
+    - echo "deb http://ftp.de.debian.org/debian sid main" | sudo tee -a /etc/apt/sources.list
+    - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B48AD6246925553 7638D0442B90D010
+    - sudo apt-get update -qq
+    - sudo apt-get -y install debootstrap qemu-user-static
+script:
+    - sudo ./update.sh -a "$ARCH" -v "$VERSION" -q "$QEMU_ARCH" -u "$QEMU_VER" -d "$DOCKER_REPO" -s "$SUITE" -i "$INCLUDE" -o "$UNAME_ARCH"

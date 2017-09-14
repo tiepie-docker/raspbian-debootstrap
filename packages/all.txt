@@ -1,0 +1,14 @@
+make
+python
+python-colorama
+g++
+libfl-dev
+flex
+bison
+openssh-client
+rsync
+zlib1g-dev
+git
+lsb-release
+fakeroot
+libfftw3-dev
