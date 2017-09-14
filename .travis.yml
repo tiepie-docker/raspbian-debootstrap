@@ -6,7 +6,7 @@ env:
         - QEMU_VER=v2.9.1
         - DOCKER_REPO=tiepie/raspbian-debootstrap
     matrix:
-        - ARCH=armhf INCLUDE=wget QEMU_ARCH=armhf SUITE=stretch UNAME_ARCH=armv6l VERSION=stretch
+        - ARCH=armhf INCLUDE=wget QEMU_ARCH=arm SUITE=stretch UNAME_ARCH=armv6l VERSION=stretch
 
 before_script:
     - echo "deb http://ftp.de.debian.org/debian sid main" | sudo tee -a /etc/apt/sources.list
