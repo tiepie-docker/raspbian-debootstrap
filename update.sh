@@ -62,6 +62,7 @@ echo "ENV ARCH=${UNAME_ARCH} UBUNTU_SUITE=${SUITE} DOCKER_REPO=${DOCKER_REPO}" >
 cat >> "${dir}/Dockerfile" <<EOF
 RUN if [ ! -s /etc/apt/sources.list ]; then \
   echo "deb http://archive.raspbian.org/raspbian ${SUITE} main contrib" > /etc/apt/sources.list; \
+fi
 EOF
 
 if [ "$DOCKER_REPO" ]; then
