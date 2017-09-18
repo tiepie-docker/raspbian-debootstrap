@@ -1,0 +1,11 @@
+--- a/debootstrap	2017-09-18 15:30:30.817269392 +0200
++++ b/debootstrap	2017-09-18 15:28:50.245168233 +0200
+@@ -240,6 +240,8 @@
+ (
+ 	set -x
+ 
++        echo "deb http://archive.raspbian.org/raspbian ${suite} main contrib" > $rootfsDir/etc/apt/sources.list
++
+ 	# make sure we're fully up-to-date
+ 	rootfs_chroot sh -xc 'apt-get update && apt-get dist-upgrade -y'
+ 
