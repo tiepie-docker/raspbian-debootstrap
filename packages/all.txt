@@ -1,6 +1,7 @@
 make
 python
 python-colorama
+python-numpy
 g++
 libfl-dev
 flex
