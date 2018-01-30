@@ -2,3 +2,4 @@ php-cli
 python-pep8
 qt5-qmake
 qt5-default
+libqt5help5
