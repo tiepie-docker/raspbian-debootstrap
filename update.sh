@@ -58,7 +58,7 @@ sudo chown -R "$(id -u):$(id -g)" "$dir"
 
 xz -d < $dir/rootfs.tar.xz | gzip -c > $dir/rootfs.tar.gz
 sed -i /^ENV/d "${dir}/Dockerfile"
-echo "ENV TIEPIE_OS=linux TIEPIE_DISTRIBUTION=debian TIEPIE_ARCH=${TIEPIE_ARCH} TIEPIE_CODENAME=${SUITE} DOCKER_REPO=${DOCKER_REPO}" >> "${dir}/Dockerfile"
+echo "ENV TIEPIE_OS=linux TIEPIE_DISTRIBUTION=raspbian TIEPIE_ARCH=${TIEPIE_ARCH} TIEPIE_CODENAME=${SUITE} DOCKER_REPO=${DOCKER_REPO}" >> "${dir}/Dockerfile"
 cat >> "${dir}/Dockerfile" <<EOF
 RUN if [ ! -s /etc/apt/sources.list ]; then \
   echo "deb http://archive.raspbian.org/raspbian ${SUITE} main contrib" > /etc/apt/sources.list; \
