@@ -7,7 +7,7 @@ while getopts "a:v:q:u:d:s:i:o:" opt; do
     case "$opt" in
     a)  ARCH=$OPTARG
         ;;
-    v)  VERSION=$OPTARG
+    v)  TIEPIE_ARCH=$OPTARG
         ;;
     q)  QEMU_ARCH=$OPTARG
         ;;
@@ -18,8 +18,6 @@ while getopts "a:v:q:u:d:s:i:o:" opt; do
     s)  SUITE=$OPTARG
         ;;
     i)  INCLUDE=$OPTARG
-        ;;
-    o)  UNAME_ARCH=$OPTARG
         ;;
     esac
 done
@@ -35,7 +33,7 @@ for include_file in ${INCLUDE_FILES[@]}; do
     fi
 done
 
-dir="$VERSION"
+dir="$SUITE"
 COMPONENTS="main"
 VARIANT="minbase"
 args=( -d "$dir" debootstrap --no-check-gpg --variant="$VARIANT" --components="$COMPONENTS" --include="$INCLUDE" --arch="$ARCH" "$SUITE" http://archive.raspbian.org/raspbian)
@@ -60,7 +58,7 @@ sudo chown -R "$(id -u):$(id -g)" "$dir"
 
 xz -d < $dir/rootfs.tar.xz | gzip -c > $dir/rootfs.tar.gz
 sed -i /^ENV/d "${dir}/Dockerfile"
-echo "ENV ARCH=${UNAME_ARCH} UBUNTU_SUITE=${SUITE} DOCKER_REPO=${DOCKER_REPO}" >> "${dir}/Dockerfile"
+echo "ENV TIEPIE_OS=linux TIEPIE_DISTRIBUTION=debian TIEPIE_ARCH=${TIEPIE_ARCH} TIEPIE_CODENAME=${SUITE} DOCKER_REPO=${DOCKER_REPO}" >> "${dir}/Dockerfile"
 cat >> "${dir}/Dockerfile" <<EOF
 RUN if [ ! -s /etc/apt/sources.list ]; then \
   echo "deb http://archive.raspbian.org/raspbian ${SUITE} main contrib" > /etc/apt/sources.list; \
