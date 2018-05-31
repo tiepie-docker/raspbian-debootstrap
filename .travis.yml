@@ -8,10 +8,14 @@ env:
     matrix:
         - ARCH=armhf INCLUDE=wget QEMU_ARCH=arm SUITE=stretch UNAME_ARCH=armv6l VERSION=stretch
 
+        - ARCH=armhf INCLUDE=wget QEMU_ARCH=arm SUITE=buster UNAME_ARCH=armv6l VERSION=buster
+
 before_script:
-    - echo "deb http://archive.ubuntu.com/ubuntu artful main universe" | sudo tee -a /etc/apt/sources.list
     - sudo apt-get update -qq
-    - sudo apt-get -yt artful install qemu-user-static debootstrap
+    - sudo apt-get install --only-upgrade dpkg
+    - echo "deb http://archive.ubuntu.com/ubuntu bionic main universe" | sudo tee -a /etc/apt/sources.list
+    - sudo apt-get update -qq
+    - sudo apt-get -yt bionic install qemu-user-static debootstrap
 script:
     - sudo ./update.sh -a "$ARCH" -v "$VERSION" -q "$QEMU_ARCH" -u "$QEMU_VER" -d "$DOCKER_REPO" -s "$SUITE" -i "$INCLUDE" -o "$UNAME_ARCH"
 after_success:
