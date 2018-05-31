@@ -1,0 +1,5 @@
+php-cli
+python-pep8
+qt5-qmake
+qt5-default
+qttools5-dev
