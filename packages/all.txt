@@ -17,3 +17,8 @@ liblua5.3-0
 libreadline-dev
 liblua5.3-dev
 cmake
+php-cli
+python-pep8
+qt5-qmake
+qt5-default
+qttools5-dev
