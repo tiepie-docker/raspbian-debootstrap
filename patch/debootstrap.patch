@@ -4,7 +4,7 @@
  (
  	set -x
  
-+        echo "deb http://archive.raspbian.org/raspbian ${suite} main contrib non-free rpi" > $rootfsDir/etc/apt/sources.list
++        echo "deb http://raspbian.raspberrypi.org/raspbian ${suite} main contrib non-free rpi" > $rootfsDir/etc/apt/sources.list
 +
  	# make sure we're fully up-to-date
  	rootfs_chroot sh -xc 'apt-get update && apt-get dist-upgrade -y'

@@ -36,7 +36,7 @@ done
 dir="$SUITE"
 COMPONENTS="main"
 VARIANT="minbase"
-args=( -d "$dir" debootstrap --no-check-gpg --variant="$VARIANT" --components="$COMPONENTS" --include="$INCLUDE" --arch="$ARCH" "$SUITE" http://archive.raspbian.org/raspbian)
+args=( -d "$dir" debootstrap --no-check-gpg --variant="$VARIANT" --components="$COMPONENTS" --include="$INCLUDE" --arch="$ARCH" "$SUITE" http://raspbian.raspberrypi.org/raspbian)
 
 mkdir -p mkimage $dir
 curl https://raw.githubusercontent.com/docker/docker/master/contrib/mkimage.sh > mkimage.sh
@@ -59,11 +59,19 @@ sudo chown -R "$(id -u):$(id -g)" "$dir"
 xz -d < $dir/rootfs.tar.xz | gzip -c > $dir/rootfs.tar.gz
 sed -i /^ENV/d "${dir}/Dockerfile"
 echo "ENV TIEPIE_OS=linux TIEPIE_DISTRIBUTION=raspbian TIEPIE_ARCH=${TIEPIE_ARCH} TIEPIE_CODENAME=${SUITE} DOCKER_REPO=${DOCKER_REPO}" >> "${dir}/Dockerfile"
+if [[ "$SUITE" =~ ^wheezy|jessie|stretch$ ]]; then
 cat >> "${dir}/Dockerfile" <<EOF
-RUN if [ ! -s /etc/apt/sources.list ]; then \
-  echo "deb http://archive.raspbian.org/raspbian ${SUITE} main contrib" > /etc/apt/sources.list; \
-fi
+RUN echo "deb http://raspbian.raspberrypi.org/raspbian ${SUITE} main contrib non-free rpi" > /etc/apt/sources.list && \\
+    echo "deb http://archive.raspberrypi.org/debian ${SUITE} main ui staging" >> /etc/apt/sources.list && \\
+    wget https://archive.raspbian.org/raspbian.public.key && \\
+    apt-key add raspbian.public.key && \\
+    rm raspbian.public.key
 EOF
+else
+cat >> "${dir}/Dockerfile" <<EOF
+RUN echo "deb http://raspbian.raspberrypi.org/raspbian ${SUITE} main contrib non-free rpi" > /etc/apt/sources.list
+EOF
+fi
 
 if [ "$DOCKER_REPO" ]; then
     docker build -t "${DOCKER_REPO}:${ARCH}-${SUITE}-slim" "${dir}"

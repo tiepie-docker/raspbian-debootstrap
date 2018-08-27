@@ -23,3 +23,5 @@ qt5-qmake
 qt5-default
 qttools5-dev
 libqt5svg5-dev
+ca-certificates
+apt-utils
