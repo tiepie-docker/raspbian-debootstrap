@@ -63,9 +63,9 @@ if [[ "$SUITE" =~ ^wheezy|jessie|stretch$ ]]; then
 cat >> "${dir}/Dockerfile" <<EOF
 RUN echo "deb http://raspbian.raspberrypi.org/raspbian ${SUITE} main contrib non-free rpi" > /etc/apt/sources.list && \\
     echo "deb http://archive.raspberrypi.org/debian ${SUITE} main ui staging" >> /etc/apt/sources.list && \\
-    wget https://archive.raspbian.org/raspbian.public.key && \\
-    apt-key add raspbian.public.key && \\
-    rm raspbian.public.key
+    wget http://archive.raspberrypi.org/debian/raspberrypi.gpg.key && \\
+    apt-key add rraspberrypi.gpg.key && \\
+    rm raspberrypi.gpg.key
 EOF
 else
 cat >> "${dir}/Dockerfile" <<EOF
