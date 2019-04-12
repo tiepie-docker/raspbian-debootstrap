@@ -54,7 +54,7 @@ mkimage="$(readlink -f "${MKIMAGE:-"mkimage.sh"}")"
     echo 'https://github.com/docker/docker/blob/master/contrib/mkimage.sh'
 } > "$dir/build-command.txt"
 
-sudo DEBOOTSTRAP="qemu-debootstrap" nice ionice -c 3 "$mkimage" "${args[@]}" 2>&1 | tee "$dir/build.log"
+travis_wait 30 sudo DEBOOTSTRAP="qemu-debootstrap" nice ionice -c 3 "$mkimage" "${args[@]}" 2>&1 | tee "$dir/build.log"
 cat "$dir/build.log"
 sudo chown -R "$(id -u):$(id -g)" "$dir"
 
