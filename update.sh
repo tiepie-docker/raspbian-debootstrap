@@ -55,7 +55,6 @@ mkimage="$(readlink -f "${MKIMAGE:-"mkimage.sh"}")"
 } > "$dir/build-command.txt"
 
 sudo DEBOOTSTRAP="qemu-debootstrap" nice ionice -c 3 "$mkimage" "${args[@]}" 2>&1 | tee "$dir/build.log"
-cat "$dir/build.log"
 sudo chown -R "$(id -u):$(id -g)" "$dir"
 
 xz -d < $dir/rootfs.tar.xz | gzip -c > $dir/rootfs.tar.gz
