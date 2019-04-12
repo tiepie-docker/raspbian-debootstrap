@@ -3,7 +3,7 @@
 # A POSIX variable
 OPTIND=1 # Reset in case getopts has been used previously in the shell.
 
-while getopts "a:v:q:u:d:s:i:o:" opt; do
+while getopts "a:v:q:u:d:s:i:o:t:" opt; do
     case "$opt" in
     a)  ARCH=$OPTARG
         ;;
@@ -18,6 +18,8 @@ while getopts "a:v:q:u:d:s:i:o:" opt; do
     s)  SUITE=$OPTARG
         ;;
     i)  INCLUDE=$OPTARG
+        ;;
+    t)  DATE=$OPTARG
         ;;
     esac
 done
@@ -87,7 +89,7 @@ if [ "$DOCKER_REPO" ]; then
 FROM ${DOCKER_REPO}:${ARCH}-${SUITE}-slim
 ADD qemu-*-static /usr/bin/
 EOF
-    docker build -t "${DOCKER_REPO}:${ARCH}-${SUITE}" "${dir}/full"
+    docker build -t "${DOCKER_REPO}:${ARCH}-${SUITE}" -t "${DOCKER_REPO}:${ARCH}-${SUITE}-${DATE}" "${dir}/full"
 fi
 
 docker run -it --rm "${DOCKER_REPO}:${ARCH}-${SUITE}" bash -xc '
